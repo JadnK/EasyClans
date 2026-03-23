@@ -1,0 +1,5 @@
+name: easyClans
+version: '1.0-SNAPSHOT'
+main: de.jadenk.easyClans.EasyClans
+api-version: '1.21'
+
