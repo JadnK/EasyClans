@@ -1,4 +1,7 @@
 package de.jadenk.easyClans.clan;
 
-public class ClanRole {
+public enum ClanRole {
+    OWNER,
+    MODERATOR,
+    MEMBER
 }

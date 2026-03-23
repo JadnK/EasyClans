@@ -1,6 +1,7 @@
 package de.jadenk.easyClans.util;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -9,7 +10,7 @@ public class InventoryBuilder {
     private final Inventory inventory;
 
     public InventoryBuilder(int rows, String title) {
-        this.inventory = Bukkit.createInventory(null, rows * 9, title);
+        this.inventory = Bukkit.createInventory(null, rows * 9, title.replace("&", "§"));
     }
 
     public InventoryBuilder addItem(ItemStack item, int slot) {
@@ -19,11 +20,6 @@ public class InventoryBuilder {
 
     public InventoryBuilder addItem(ItemStack item) {
         inventory.addItem(item);
-        return this;
-    }
-
-    public InventoryBuilder addHeader() {
-
         return this;
     }
 
@@ -54,6 +50,27 @@ public class InventoryBuilder {
         return this;
     }
 
+    public InventoryBuilder fillBorder(ItemStack item) {
+        int size = inventory.getSize();
+        int rows = size / 9;
+
+        for (int slot = 0; slot < 9; slot++) {
+            inventory.setItem(slot, item);
+        }
+
+        int startLastRow = (rows - 1) * 9;
+        for (int slot = startLastRow; slot < size; slot++) {
+            inventory.setItem(slot, item);
+        }
+
+        for (int row = 0; row < rows; row++) {
+            inventory.setItem(row * 9, item);
+            inventory.setItem(row * 9 + 8, item);
+        }
+
+        return this;
+    }
+
     public InventoryBuilder clearSlot(int slot) {
         inventory.setItem(slot, null);
         return this;
@@ -76,6 +93,15 @@ public class InventoryBuilder {
         }
 
         return this;
+    }
+
+    public InventoryBuilder decorateDefault() {
+        ItemStack filler = new ItemBuilder(Material.GRAY_STAINED_GLASS_PANE)
+                .setName("&7")
+                .hideAllFlags()
+                .build();
+
+        return fillBorder(filler).fillEmptySlots(filler);
     }
 
     public Inventory build() {

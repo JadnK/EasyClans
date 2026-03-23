@@ -1,4 +1,10 @@
 package de.jadenk.easyClans.storage;
 
-public class Storage {
+public interface Storage {
+
+    void load();
+
+    void save();
+
+    void close();
 }

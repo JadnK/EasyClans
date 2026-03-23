@@ -1,4 +1,6 @@
 package de.jadenk.easyClans.storage;
 
-public class StorageType {
+public enum StorageType {
+    YAML,
+    SQL
 }
